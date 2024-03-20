@@ -2,20 +2,19 @@ package com.learning.expense.domain;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import io.micrometer.common.lang.Nullable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -31,7 +30,7 @@ public class Expense {
     @Column(name = "id", columnDefinition = "VARCHAR(36)")
     private String id;
 
-    @Column(nullable = false, length = 255)
+    @Column(nullable = true, length = 255)
     private String description;
 
     @Column(nullable = false, precision = 10, scale = 2)
@@ -51,23 +50,10 @@ public class Expense {
         }
     }
 
-    @ManyToOne
-    @JoinColumn(name = "group_id")
-    private Group group;
+    @Column(name = "group_id", nullable = true)
+    private Long groupId;
 
-    @ManyToMany
-    @JoinTable(
-            name = "Expense_Payer",
-            joinColumns = @JoinColumn(name = "expense_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
-    private Set<User> payers;
-
-    @ManyToMany
-    @JoinTable(
-            name = "Expense_Participant",
-            joinColumns = @JoinColumn(name = "expense_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
-    private Set<User> participants;
+    @Nullable
+    @OneToMany(mappedBy = "expense")
+    private Set<UserExpense> participants = new HashSet<>();
 }

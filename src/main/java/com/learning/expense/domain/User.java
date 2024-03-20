@@ -20,10 +20,10 @@ public class User {
     @Column(name = "id", columnDefinition = "VARCHAR(36)")
     private String id;
 
-    @Column(nullable = false, length = 20)
+    @Column(nullable = true, length = 20)
     private String username;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String password;
 
     @Column(nullable = false, length = 50)
@@ -31,5 +31,4 @@ public class User {
 
     @Column(nullable = false, length = 50, columnDefinition = "TEXT")
     private String name;
-
 }
