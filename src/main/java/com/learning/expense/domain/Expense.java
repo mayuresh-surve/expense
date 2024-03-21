@@ -8,10 +8,12 @@ import java.util.Set;
 import org.hibernate.annotations.GenericGenerator;
 
 import io.micrometer.common.lang.Nullable;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
@@ -51,9 +53,9 @@ public class Expense {
     }
 
     @Column(name = "group_id", nullable = true)
-    private Long groupId;
+    private String groupId;
 
     @Nullable
-    @OneToMany(mappedBy = "expense")
+    @OneToMany(mappedBy = "expense", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<UserExpense> participants = new HashSet<>();
 }

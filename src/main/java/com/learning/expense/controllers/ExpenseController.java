@@ -22,7 +22,7 @@ public class ExpenseController {
     }
 
     @PostMapping
-    public ResponseEntity<HttpStatus> addExpense(@RequestBody ExpenseRequest expenseRequest){
+    public ResponseEntity<HttpStatus> addExpense(@RequestBody ExpenseRequest expenseRequest) throws Exception{
         expenseService.addExpense(expenseRequest);
         return new ResponseEntity<>(HttpStatus.OK);
     }

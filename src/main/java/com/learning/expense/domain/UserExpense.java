@@ -11,10 +11,12 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.Data;
 
 @Data
 @Entity
+@Table(name = "User_Expense")
 public class UserExpense {
     @Id
     @GeneratedValue(generator = "uuid2")
@@ -32,7 +34,7 @@ public class UserExpense {
     @Nullable
     @ManyToOne
     @JoinColumn(name = "group_id")
-    private Group group = new Group();  
+    private Group group;  
 
     @Column(name = "amount_paid", precision = 10, scale = 2)
     private BigDecimal amountPaid = BigDecimal.ZERO;
